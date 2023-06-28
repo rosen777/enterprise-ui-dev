@@ -31,28 +31,51 @@ describe('Kanban Board', () => {
   it.todo('should include "Backlog" in board.statuses', () => {
     const board = new KanbanBoard('Things to Do');
     expect.hasAssertions();
+    expect(board.statuses).toContain('Backlog');
     // Verify that board.statuses contains "Backlog".
   });
 
-  it.todo('should *not* include "Bogus" in board.statuses', () => {
+  it('should *not* include "Bogus" in board.statuses', () => {
     const board = new KanbanBoard('Things to Do');
     expect.hasAssertions();
+    expect(board.statuses).not.toContain('Bogus');
     // Verify that board.statuses does not contain "Bogus".
   });
 
-  it.todo(
-    'should include an added status in board.statuses using #addStatus',
-    () => {
-      const board = new KanbanBoard('Things to Do');
-      expect.hasAssertions();
-      // Use board.addStatus to add a status.
-      // Verify that the new status is—in fact—now in board.statuses.
-    },
-  );
-
-  it.todo('should remove a status using #removeStatus', () => {
+  it('should include an added status in board.statuses using #addStatus', () => {
     const board = new KanbanBoard('Things to Do');
-    expect.hasAssertions();
+    board.addStatus('Verifying');
+    expect(board.statuses).toContain('Verifying');
+    // Use board.addStatus to add a status.
+    // Verify that the new status is—in fact—now in board.statuses.
+  });
+
+  it('should remove a status using #removeStatus', async () => {
+    const board = new KanbanBoard('Things to Do');
+    const status = 'Backlog';
+
+    board.removeStatus(status);
+    const returnValue = await board.removeStatus(status);
+    expect(board.statuses).not.toContain(status);
+    expect(returnValue).resolves.toBe(4);
+    // Use board.removeStatus to remove a status.
+
+    // You can be clever or you can just assume "Backlog" is in board.statuses
+    // by default.
+
+    // Verify that the status is no longer in in board.statuses.
+  });
+
+  it('should remove a status using #removeStatus', async () => {
+    const board = new KanbanBoard('Things to Do');
+    const status = 'Backlog';
+
+    expect(board.statuses).toContain(status);
+
+    const returnValue = board.removeStatus(status);
+
+    expect(board.statuses).not.toContain(status);
+    expect(returnValue).rejects.toBe(4);
     // Use board.removeStatus to remove a status.
 
     // You can be clever or you can just assume "Backlog" is in board.statuses
