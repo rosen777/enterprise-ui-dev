@@ -1,9 +1,8 @@
 // @vitest-environment happy-dom
 
-import { screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import Counter from '.';
+import { screen } from '@testing-library/react';
 import { render } from './test/utilities';
+import Counter from '.';
 
 test('it should render the component', () => {
   render(<Counter />);
